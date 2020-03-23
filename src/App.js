@@ -8,6 +8,7 @@ const App = () => {
   const APP_KEY = 'f31fa5c1d11aeca6903ac6564af282e6';
 
   const [recipes, setRecipes] = useState([]);
+  const [search, setSearch] = useState("");
 
   useEffect( () => {
     // console.log('Effect has been run');
@@ -21,16 +22,21 @@ const App = () => {
     console.log(data.hits);
   }
 
+  const updateSearch = e => {
+    setSearch(e.target.value)
+  }
+
   return (
     <div className="App">
       <form className="search-form">
-        <input className="search-bar" type="text" />
+        <input className="search-bar" type="text" value={search} onChange={updateSearch} />
         <button className="search-button" type="submit">
           Search
         </button>
       </form>
       {recipes.map(recipe => (
         <Recipe 
+          key={recipe.recipe.label} // to remove the console log err "Each child in a list should have a unique "key" prop."
           title={recipe.recipe.label} 
           calories={recipe.recipe.calories}
           image={recipe.recipe.image}
